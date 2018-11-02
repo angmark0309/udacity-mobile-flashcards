@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import { createMaterialTopTabNavigator, createStackNavigator, createBottomTabNavigator } from 'react-navigation'
+import { createMaterialTopTabNavigator, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import  DeckList from './components/DeckList';
 import { white } from './utils/colors';
 import { Constants } from 'expo'
@@ -20,12 +21,16 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
 
 const Tabs = createBottomTabNavigator({
   Decks: {
-    screen: DeckList
+    screen: DeckList,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Ionicons name="ios-bookmarks" size={30} color={tintColor} />
+    }
   },
   NewDeck: {
     screen: NewDeck,
     navigationOptions: {
-      tabBarLabel: "New Deck"
+      tabBarLabel: "New Deck",
+      tabBarIcon: ({ tintColor }) => <FontAwesome name="plus-square" size={30} color={tintColor} />
     }
   }
   })

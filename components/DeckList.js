@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { getDecks } from '../utils/api'
-import  DeckItem  from './DeckItem'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { getDecks } from '../utils/api';
+import  DeckItem  from './DeckItem';
+import {white} from '../utils/colors';
 
 export default class DeckList extends Component {
     
@@ -43,23 +44,38 @@ export default class DeckList extends Component {
     render() {
         const { decks } = this.state
         return (
-            <View>
+            <ScrollView>
                 {decks && Object.keys(decks).map((key)=>{
                     const {title, questions} = decks[key];
                     const questionsCount = questions.length;
                      return (
                          <TouchableOpacity key={key} onPress={() => this.props.navigation.navigate('IndividualDeck', {title, cards:questionsCount})}>
-                             <DeckItem style={styles.container} title={title} cards={questionsCount} />
+                            <View style={styles.container}>
+                                 <DeckItem title={title} cards={questionsCount} />
+                            </View>
                          </TouchableOpacity>
                      )
                 })}
-            </View>
+            </ScrollView>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-
+        backgroundColor: white,
+        borderRadius: 2,
+        padding: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 17,
+        justifyContent: 'center',
+        shadowRadius: 3,
+        shadowOpacity: 0.8,
+        shadowColor: 'rgba(0, 0, 0, 0.24)',
+        shadowOffset: {
+            width: 0,
+            height: 3
+        }
     }
-})
+});
