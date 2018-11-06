@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { getDeck } from '../utils/api'
+import { getDeck } from '../utils/api';
+import { green, red, white } from '../utils/colors';
 
 export default class Quiz extends Component {
 
@@ -74,25 +75,76 @@ export default class Quiz extends Component {
         const { questionIndex, questions, totalQuestions, answerText } = this.state;
         return (
             <View>
-                {totalQuestions && <Text>{`${questionIndex + 1}/${totalQuestions}`}</Text>}
+                {totalQuestions && <Text style={styles.total}>{`${questionIndex + 1}/${totalQuestions}`}</Text>}
+                <View style={styles.container}>
                 {
-                    (questions && answerText) ? <Text>{questions[questionIndex].answer}</Text> :
+                    (questions && answerText) ? <Text style={styles.title}>{questions[questionIndex].answer}</Text> :
                     null
                 }
                 {
-                    (questions && !answerText) ? <Text>{questions[questionIndex].question}</Text> :
+                    (questions && !answerText) ? <Text style={styles.title}>{questions[questionIndex].question}</Text> :
                     null
                 }
                 <TouchableOpacity onPress={this.showAnswerOrQuestion}>
-                    <Text>{answerText ? `Question` : `Answer`}</Text>
+                    <Text style={[styles.toggleAnswer, styles.total]}>{answerText ? `Question` : `Answer`}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>(this.handleAnswer('correct'))}>
-                    <Text>Correct</Text>
+                <TouchableOpacity style={styles.correctBtn} onPress={()=>(this.handleAnswer('correct'))}>
+                    <Text style={styles.correctness}>Correct</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => (this.handleAnswer('inCorrect'))}>
-                    <Text>Incorrect</Text>
+                <TouchableOpacity style={styles.startBtn} onPress={() => (this.handleAnswer('inCorrect'))}>
+                    <Text style={styles.correctness}>Incorrect</Text>
                 </TouchableOpacity>
+                </View>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 100
+    },
+    title: {
+        fontSize: 30,
+        textAlign: 'center'
+    },
+
+    correctness: {
+        textAlign: 'center',
+        color : white,
+        fontSize: 16
+    },
+    total: {
+        fontSize: 16
+    },
+    toggleAnswer: {
+        paddingTop: 10,
+        paddingBottom : 80,
+        color: red,
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
+    correctBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: green,
+        backgroundColor: green,
+        borderStyle: 'solid',
+        borderRadius: 2,
+        paddingTop: 15,
+        paddingBottom: 15
+    },
+    startBtn: {
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: red,
+        backgroundColor: red,
+        borderStyle: 'solid',
+        borderRadius: 2,
+        paddingTop: 15,
+        paddingBottom: 15
+    }
+});

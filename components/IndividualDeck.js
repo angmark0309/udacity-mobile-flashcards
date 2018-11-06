@@ -8,7 +8,7 @@ export default class IndividualDeck extends Component {
         const { title, cards } = this.props.navigation.state.params 
         return (
             <View style={styles.container}>
-                <View style={{paddingBottom: 50}}>
+                <View style={{paddingBottom: 80}}>
                     <DeckItem title={title} cards={cards} />
                 </View>
             <TouchableOpacity style={styles.addBtn} onPress={() => this.props.navigation.navigate('NewCard', { id: title})}>

@@ -7,6 +7,7 @@ import {
     TextInput 
 } from 'react-native';
 import { saveCardToDeck } from '../utils/api';
+import { purple, gray, white } from '../utils/colors'
 
 export default class NewCard extends Component {
     
@@ -27,24 +28,56 @@ export default class NewCard extends Component {
     }
     render() {
         const {questionInput, answerInput} = this.state;
-        return (
-            <KeyboardAvoidingView behavior='padding'>
-                <TextInput
-                    value={questionInput}
-                    onChangeText={questionInput => this.setState({ questionInput })}
-                    placeholder="Question" 
-                />
-                <TextInput
-                    value={answerInput}
-                    onChangeText={answerInput => this.setState({ answerInput })}
-                    placeholder="Answer" 
-                />
-                <TouchableOpacity 
-                    disabled={!questionInput || !answerInput} 
-                    onPress={this.handleAddToDeck}>
-                    <Text>Add to Deck</Text>
-                </TouchableOpacity>
-            </KeyboardAvoidingView>
+        return (    
+                <KeyboardAvoidingView style={styles.container} behavior='padding'>
+                    <TextInput
+                        style={styles.input}
+                        underlineColorAndroid = "transparent"
+                        value={questionInput}
+                        onChangeText={questionInput => this.setState({ questionInput })}
+                        placeholder="Question" 
+                    />
+                    <TextInput
+                        style={styles.input}
+                        underlineColorAndroid = "transparent"
+                        value={answerInput}
+                        onChangeText={answerInput => this.setState({ answerInput })}
+                        placeholder="Answer" 
+                    />
+                    <TouchableOpacity 
+                        style={styles.addBtn}
+                        disabled={!questionInput || !answerInput} 
+                        onPress={this.handleAddToDeck}>
+                        <Text style={{fontSize: 16, color: white}}>Add to Deck</Text>
+                    </TouchableOpacity>
+                </KeyboardAvoidingView>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container : {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+    },
+    addBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: purple,
+        backgroundColor: purple,
+        borderStyle: 'solid',
+        borderRadius: 2,
+        paddingTop: 15,
+        paddingBottom: 15,
+        margin: 15
+    },
+    input: {
+        margin: 15,
+        height: 40,
+        borderColor: gray,
+        borderWidth: 1,
+        textAlign: 'center'
+     }
+});

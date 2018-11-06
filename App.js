@@ -44,12 +44,21 @@ const MainNavigator = createStackNavigator({
   },
   IndividualDeck: {
     screen: IndividualDeck,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
   Quiz: {
-    screen: Quiz
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz'
+    }
   },
   Results: {
-    screen: Results
+    screen: Results,
+    navigationOptions: {
+      title: 'Score'
+    }
   },
   NewCard: {
     screen: NewCard

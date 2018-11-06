@@ -7,6 +7,7 @@ import {
     TextInput
 } from 'react-native';
 import { saveNewDeck } from '../utils/api';
+import { gray, white, purple } from '../utils/colors'
 
 export default class NewDeck extends Component {
 
@@ -27,19 +28,52 @@ export default class NewDeck extends Component {
     render() {
         const { deckTitle } = this.state;
         return (
-            <KeyboardAvoidingView behavior='padding'>
-                <Text>What is the title of your new deck?</Text>
+            <KeyboardAvoidingView style={styles.container} behavior='padding'>
+                <Text style={styles.question}>What is the title of your new deck?</Text>
                 <TextInput
+                    style={styles.input}
                     value={deckTitle}
                     onChangeText={deckTitle => this.setState({ deckTitle })}
                     placeholder="Deck Title"
                 />
                 <TouchableOpacity
+                    style={styles.submit}
                     disabled={!deckTitle} 
                     onPress={this.handleAddNewDeck}>
-                    <Text>Submit</Text>
+                    <Text style={{fontSize: 16, color: white}}>Submit</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container : {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+    },
+    question: {
+        textAlign: 'center',
+        fontSize: 30
+    },
+    submit: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: purple,
+        backgroundColor: purple,
+        borderStyle: 'solid',
+        borderRadius: 2,
+        paddingTop: 15,
+        paddingBottom: 15,
+        margin: 15
+    },
+    input: {
+        margin: 15,
+        height: 40,
+        borderColor: gray,
+        borderWidth: 1,
+        textAlign: 'center'
+     }
+});
