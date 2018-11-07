@@ -33,6 +33,7 @@ export default class NewDeck extends Component {
                 <TextInput
                     style={styles.input}
                     value={deckTitle}
+                    underlineColorAndroid = "transparent"
                     onChangeText={deckTitle => this.setState({ deckTitle })}
                     placeholder="Deck Title"
                 />

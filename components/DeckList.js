@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { getDecks } from '../utils/api';
 import  DeckItem  from './DeckItem';
 import {white} from '../utils/colors';
@@ -7,7 +7,8 @@ import {white} from '../utils/colors';
 export default class DeckList extends Component {
     
     state = {
-        decks: null
+        decks: null,
+        bounceValue: new Animated.Value(1)
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -41,18 +42,26 @@ export default class DeckList extends Component {
             })
     }
 
+    handleDeckPress = (title, questionsCount) => {
+        const { bounceValue } = this.state
+        Animated.sequence([
+            Animated.timing(bounceValue, { duration: 200, toValue: 1.04 }),
+            Animated.spring(bounceValue, { toValue: 1, friction: 4})
+        ]).start(() => this.props.navigation.navigate('IndividualDeck', {title, questionsCount}))
+    }
+
     render() {
-        const { decks } = this.state
+        const { decks, bounceValue } = this.state
         return (
             <ScrollView>
                 {decks && Object.keys(decks).map((key)=>{
                     const {title, questions} = decks[key];
                     const questionsCount = questions.length;
                      return (
-                         <TouchableOpacity key={key} onPress={() => this.props.navigation.navigate('IndividualDeck', {title, cards:questionsCount})}>
-                            <View style={styles.container}>
+                         <TouchableOpacity key={key} onPress={() => this.handleDeckPress(title,questionsCount)}>
+                            <Animated.View style={[styles.container, {transform: [{scale: bounceValue}]}]}>
                                  <DeckItem title={title} cards={questionsCount} />
-                            </View>
+                            </Animated.View>
                          </TouchableOpacity>
                      )
                 })}
