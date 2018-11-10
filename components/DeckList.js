@@ -47,7 +47,7 @@ export default class DeckList extends Component {
         Animated.sequence([
             Animated.timing(bounceValue, { duration: 200, toValue: 1.04 }),
             Animated.spring(bounceValue, { toValue: 1, friction: 4})
-        ]).start(() => this.props.navigation.navigate('IndividualDeck', {title, questionsCount}))
+        ]).start(() => this.props.navigation.navigate('IndividualDeck', {title, cards: questionsCount}))
     }
 
     render() {

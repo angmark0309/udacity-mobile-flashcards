@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import DeckItem from './DeckItem';
-import {black, white} from '../utils/colors';
+import { black, white } from '../utils/colors';
+import { clearLocalNotification, setLocalNotification } from '../utils/notification';
 
 export default class IndividualDeck extends Component {
+
+    startQuiz = (title) => {
+        this.props.navigation.navigate('Quiz', {id:title})
+        clearLocalNotification()
+        .then(setLocalNotification())
+    }
+
     render() {
         const { title, cards } = this.props.navigation.state.params 
         return (
@@ -14,7 +22,7 @@ export default class IndividualDeck extends Component {
             <TouchableOpacity style={styles.addBtn} onPress={() => this.props.navigation.navigate('NewCard', { id: title})}>
                     <Text style={{fontSize: 16}}>Add Card</Text>
             </TouchableOpacity>
-                <TouchableOpacity style={styles.startBtn} disabled={!cards} onPress={() => this.props.navigation.navigate('Quiz', {id:title})}>
+                <TouchableOpacity style={styles.startBtn} disabled={!cards} onPress={()=>{this.startQuiz(title)}}>
                 <Text style={{color: white, fontSize: 16}}>Start Quiz</Text>
             </TouchableOpacity>
             </View>    

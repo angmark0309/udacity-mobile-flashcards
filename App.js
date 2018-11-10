@@ -10,6 +10,7 @@ import  Quiz  from './components/Quiz';
 import Results from './components/Results';
 import NewCard from './components/NewCard';
 import NewDeck from './components/NewDeck';
+import { setLocalNotification } from './utils/notification';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -67,6 +68,11 @@ const MainNavigator = createStackNavigator({
 )
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <View style={styles.container}>
